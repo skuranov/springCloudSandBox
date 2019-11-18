@@ -1,0 +1,45 @@
+server:
+  port: 9767
+
+spring:
+  application:
+    name:
+      "product-service"
+  zipkin:
+    base-url: "http://localhost:9411/"
+  sleuth:
+    sampler:
+      probability: 1
+
+logging:
+  level:
+    root: TRACE
+
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://localhost:8761/eureka/"
+
+hystrix:
+  command:
+    product:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+      circuitBreaker:
+        errorThresholdPercentage: 60
+
+  threadpool:
+    default:
+      maximumSize: 8
+
+management:
+                 endpoints:
+                   web:
+                     exposure:
+                       include: "*"
+
+                 endpoint:
+                   metrics:
+                     enabled: true
